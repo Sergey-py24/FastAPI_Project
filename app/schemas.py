@@ -1,4 +1,7 @@
 from pydantic import BaseModel
+from fastapi import APIRouter
+
+router = APIRouter(prefix="/schemas", tags=["schemas"])
 
 class CreateUser(BaseModel):
     username: str

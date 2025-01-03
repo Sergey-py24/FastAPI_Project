@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///taskmanager.db', echo=True)
+engine = create_engine('sqlite:///taskmanager.db', echo=True, connect_args={'check_same_thread': False})
 
-SessionLocal = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
-class Base(DeclarativeBase):
-    pass
+Base = declarative_base()
