@@ -68,11 +68,12 @@ async def delete_user(db: Annotated[Session, Depends(get_db)], user_id: int):
 
 @router.get('/user_id/tasks')
 async def tasks_by_user_id(db: Annotated[Session, Depends(get_db)], user_id: int):
+    user = db.scalar(select(User).where(user_id == User.id))
     tasks = db.scalars(select(Task).where(user_id == Task.user_id)).all()
-    if tasks is None:
+    if user is None:
         return HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='User was not found')
+            detail='User not found')
     return tasks
 
 
